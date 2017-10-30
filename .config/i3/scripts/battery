@@ -1,0 +1,21 @@
+#!/bin/sh
+current_percent=`cat /sys/class/power_supply/BAT0/capacity`
+charging_status=`cat /sys/class/power_supply/BAT0/status`
+bat_icon=" "
+if [ "$current_percent" -lt "75" ]; then
+	bat_icon=" "
+fi
+if [ "$current_percent" -lt "50" ]; then
+	bat_icon=" "
+fi
+if [ "$current_percent" -lt "25" ]; then
+	bat_icon=" "
+fi
+if [ "$current_percent" -lt "5" ]; then
+	bat_icon=" "
+fi
+if [ "$charging_status" == "Charging" ]; then
+	bat_icon=""
+fi
+
+echo "$bat_icon: $current_percent%"
