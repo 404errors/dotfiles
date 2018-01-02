@@ -1,0 +1,3 @@
+#!/bin/sh
+network_name=`iwgetid -r`
+echo $network_name

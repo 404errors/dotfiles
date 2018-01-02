@@ -72,7 +72,7 @@ bindsym $mod+h split h
 bindsym $mod+v split v
 
 # enter fullscreen mode for the focused container
-bindsym $mod+f fullscreen toggle
+bindsym $mod+Shift+f fullscreen toggle
 
 # change container layout (stacked, tabbed, toggle split)
 bindsym $mod+s layout stacking
@@ -91,16 +91,17 @@ bindsym $mod+a focus parent
 # focus the child container
 #bindsym $mod+d focus child
 #workspace variables
-set $workspace1 "1.. "
+set $workspace1 "1. ."
 set $workspace2 "2.  "
 set $workspace3 "3.  "
 set $workspace4 "4.  "
+set $workspace5 "5.  "
 # switch to workspace
 bindsym $mod+1 workspace $workspace1
 bindsym $mod+2 workspace $workspace2
 bindsym $mod+3 workspace $workspace3
 bindsym $mod+4 workspace $workspace4
-bindsym $mod+5 workspace 5
+bindsym $mod+5 workspace $workspace5
 bindsym $mod+6 workspace 6
 bindsym $mod+7 workspace 7
 bindsym $mod+8 workspace 8
@@ -112,7 +113,7 @@ bindsym $mod+Shift+1 move container to workspace $workspace1
 bindsym $mod+Shift+2 move container to workspace $workspace2
 bindsym $mod+Shift+3 move container to workspace $workspace3
 bindsym $mod+Shift+4 move container to workspace $workspace4
-bindsym $mod+Shift+5 move container to workspace 5
+bindsym $mod+Shift+5 move container to workspace $workspace5
 bindsym $mod+Shift+6 move container to workspace 6
 bindsym $mod+Shift+7 move container to workspace 7
 bindsym $mod+Shift+8 move container to workspace 8
@@ -125,13 +126,24 @@ assign [class="Google-chrome"] $workspace2
 assign [class="Audacious"] $workspace4
 assign [class="Xfce4-terminal"] $workspace1
 assign [class="Vlc"] $workspace4
-
+assign [class="jetbrains-idea"] $workspace3
+assign [class="Eclipse"] $workspace3
+assign [class="Thunar"] $workspace5
+for_window [class="Firefox"] border pixel 0
+for_window [class="Google-chrome"] border pixel 0
+for_window [class="MainApp"] floating enable
+for_window [window_role="pop-up"] floating enable
+for_window [class="decisionsupportsystem.Main"] floating enable
+for_window [class="TeamViewer"] floating enable
+for_window [class="System Monitor"] floating enable
+for_window [class="Thunar"] focus
 # reload the configuration file
 bindsym $mod+Shift+c reload
 # restart i3 inplace (preserves your layout/session, can be used to upgrade i3)
 bindsym $mod+Shift+r restart
 # exit i3 (logs you out of your X session)
 bindsym $mod+Shift+e exec "i3-nagbar -t warning -m 'You pressed the exit shortcut. Do you really want to exit i3? This will end your X session.' -b 'Yes, exit i3' 'i3-msg exit'"
+bindsym $mod+t exec thunar
 
 # resize window (you can also use the mouse for that)
 mode "resize" {
@@ -178,7 +190,7 @@ client.urgent $urgent-bg-color $urgent-bg-color $text-color #00ff00
 hide_edge_borders both
 bar {
         status_command i3blocks -c /home/phucnn/.config/i3/i3blocks.conf
-	position top
+	position bottom
 	font pango: Source Code Pro Bold 11
 	colors {
 		background $bg-color
@@ -195,12 +207,14 @@ bindsym $mod+r exec rofi -show drun -lines 5 -eh 1 -width 800 -font "System San 
 
 bindsym $mod+c exec rofi -show run -lines 5 -eh 1 -width 100 -font "System San Francisco Display 18" -padding 5 -fake-background "/home/phucnn/.config/emilia.png"
 bindsym $mod+shift+x exec i3lock
+
 #bindsym $mod+r exec rofi -show run -line 3 -width 100 -padding 600 -opacity "85" -font "System San Francisco Display 15" -bg "$bg-color" -fg "$text-color"
 
 # Pulse Audio controls
 bindsym XF86AudioRaiseVolume exec --no-startup-id pactl set-sink-volume 0 +5% #increase sound volume
 bindsym XF86AudioLowerVolume exec --no-startup-id pactl set-sink-volume 0 -5% #decrease sound volume
 bindsym XF86AudioMute exec --no-startup-id pactl set-sink-mute 0 toggle # mute sound
+bindsym XF86HomePage exec google-chrome-stable
 
 # Sreen brightness controls
 bindsym XF86MonBrightnessUp exec xbacklight -inc 10 # increase screen brightness
@@ -209,5 +223,7 @@ bindsym $mod+x mode "resize"
 
 # STARTUP
 exec_always feh --bg-scale /home/phucnn/.config/emilia.jpg
-exec compton
+exec --no-startup-id nm-applet
+exec xfce4-terminal
+#exec compton --config ~/.config/compton.conf -b
 
